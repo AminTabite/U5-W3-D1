@@ -6,6 +6,7 @@ import amintabite.U5_W3_D1.Services.DipendenteService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -17,6 +18,7 @@ public class DipendenteController {
 
 
     @GetMapping
+    @PreAuthorize("hasAuthority('RESPONSABILE')")
     public Page<Dipendente> getDipendenti(
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue ="4" ) int size,
@@ -27,6 +29,7 @@ public class DipendenteController {
 
 
     @PostMapping
+    @PreAuthorize("hasAuthority('RESPONSABILE')")
     @ResponseStatus(HttpStatus.CREATED)
     public Dipendente createDipendente(@RequestBody DipendentePayload body){
 
@@ -45,6 +48,7 @@ public class DipendenteController {
 
 
     @DeleteMapping("/{iddipendente}")
+    @PreAuthorize("hasAuthority('RESPONSABILE')")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteDipendente(@PathVariable long iddipendente){
                 dipendenteService.findByIdAndDelete(iddipendente);

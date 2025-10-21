@@ -1,11 +1,16 @@
 package amintabite.U5_W3_D1.Entities;
 
+import amintabite.U5_W3_D1.Roles;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
+import java.util.Collection;
 import java.util.List;
 
 @Entity
@@ -14,7 +19,7 @@ import java.util.List;
 @ToString
 @NoArgsConstructor
 
-public class Dipendente {
+public class Dipendente implements UserDetails {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -24,6 +29,7 @@ public class Dipendente {
     private String cognome;
     private  String email;
     private String password;
+    private Roles role;
 
     @OneToMany
     @JoinColumn(name = "Dipendente_id")
@@ -37,4 +43,15 @@ public class Dipendente {
         this.email = email;
         this.password = password;
     }
+
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+
+
+        return List.of(new SimpleGrantedAuthority(this.role.name()));
+    }
+
+
+
+
 }

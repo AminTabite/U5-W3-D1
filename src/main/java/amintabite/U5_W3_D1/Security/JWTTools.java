@@ -36,5 +36,15 @@ public class JWTTools {
     }
 
 
+    public long extractIdFromToken(String token) {
+        return Long.parseLong(
+                Jwts.parser()
+                        .verifyWith(Keys.hmacShaKeyFor(secret.getBytes()))
+                        .build()
+                        .parseSignedClaims(token)
+                        .getPayload()
+                        .getSubject()
+        );
+    }
 
 }
