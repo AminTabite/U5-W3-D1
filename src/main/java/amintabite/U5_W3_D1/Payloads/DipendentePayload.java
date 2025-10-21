@@ -28,4 +28,6 @@ public class DipendentePayload {
     @Email(message = "L'indirizzo email inserito non è nel formato corretto!")
     private  String email;
 
+    private String password;
+
 }

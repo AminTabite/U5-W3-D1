@@ -35,7 +35,8 @@ public class DipendenteService {
                 payload.getUsername(),
                 payload.getNome(),
                 payload.getCognome(),
-                payload.getEmail()
+                payload.getEmail(),
+                payload.getPassword()
 
 
         );
@@ -70,6 +71,7 @@ public class DipendenteService {
         found.setNome(payload.getNome());
         found.setCognome(payload.getCognome());
         found.setEmail(payload.getEmail());
+        found.setPassword(payload.getPassword());
 
         return dipendenteRepository.save(found);
 
@@ -88,6 +90,10 @@ public class DipendenteService {
 
 
 
+    }
+
+    public Dipendente findByEmail(String email) {
+        return this.dipendenteRepository.findByEmail(email).orElseThrow(() -> new NotFoundException("Dipendente con l'email " + email + " non è stato trovato"));
     }
 
 
